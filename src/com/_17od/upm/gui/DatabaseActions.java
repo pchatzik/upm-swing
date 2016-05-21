@@ -616,11 +616,6 @@ public class DatabaseActions {
     }
 
 
-    public void resetSearch() {
-        mainWindow.getSearchField().setText("");
-    }
-
-
     public void showDatabaseProperties() throws ProblemReadingDatabaseFile, IOException, CryptoException, PasswordDatabaseException {
         try {
             if (getLatestVersionOfDatabase()) {
