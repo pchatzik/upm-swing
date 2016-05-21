@@ -119,5 +119,15 @@ public class AccountInformation extends FlatPackObject {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+    
+    public String[] getAccountAsStringArray() {
+		String[] arr = new String[5];
+		arr[0] = getAccountName();
+		arr[1] = new String(getUserId());
+		arr[2] = new String(getPassword());
+		arr[3] = new String(getUrl());
+		arr[4] = new String(getNotes());
+		return arr;
+	}
 
 }
