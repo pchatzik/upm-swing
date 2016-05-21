@@ -45,9 +45,7 @@ public class AccountsCSVMarshaller {
             CsvWriter csvWriter = new CsvWriter(writer, ',');
             for (int i=0; i<accounts.size(); i++) {
                 csvWriter.writeRecord(
-                        getAccountAsStringArray(
-                                (AccountInformation) accounts.get(i)
-                        )
+                        ((AccountInformation) accounts.get(i)).getAccountAsStringArray()
                 );
             }
             csvWriter.close();
@@ -83,16 +81,6 @@ public class AccountsCSVMarshaller {
         }
 
         return accounts;
-    }
-
-    private String[] getAccountAsStringArray(AccountInformation account) {
-        String[] arr = new String[5];
-        arr[0] = account.getAccountName();
-        arr[1] = new String(account.getUserId());
-        arr[2] = new String(account.getPassword());
-        arr[3] = new String(account.getUrl());
-        arr[4] = new String(account.getNotes());
-        return arr;
     }
 
 }
