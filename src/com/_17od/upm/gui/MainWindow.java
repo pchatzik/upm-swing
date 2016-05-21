@@ -321,7 +321,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		searchField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					dbActions.resetSearch();
+					resetSearch();
 				} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					// If the user hits the enter key in the search field and
 					// there's only one item
@@ -1065,7 +1065,7 @@ public class MainWindow extends JFrame implements ActionListener {
 			} else if (event.getActionCommand() == MainWindow.ABOUT_TXT) {
 				dbActions.showAbout();
 			} else if (event.getActionCommand() == MainWindow.RESET_SEARCH_TXT) {
-				dbActions.resetSearch();
+				resetSearch();
 			} else if (event.getActionCommand() == MainWindow.CHANGE_MASTER_PASSWORD_TXT) {
 				dbActions.reloadDatabaseBefore(new ChangeMasterPasswordAction());
 			} else if (event.getActionCommand() == MainWindow.DATABASE_PROPERTIES_TXT) {
@@ -1175,6 +1175,10 @@ public class MainWindow extends JFrame implements ActionListener {
 			getDeleteAccountMenuItem().setEnabled(true);
 			getViewAccountMenuItem().setEnabled(true);
 		}
+	}
+	
+	private void resetSearch() {
+		searchField.setText("");
 	}
 
 	public interface ChangeDatabaseAction {
