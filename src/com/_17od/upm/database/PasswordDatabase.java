@@ -20,9 +20,16 @@
  */
 package com._17od.upm.database;
 
+import com._17od.upm.crypto.CryptoException;
+import com._17od.upm.crypto.EncryptionService;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 /**
@@ -96,5 +103,27 @@ public class PasswordDatabase {
     public int getRevision() {
         return revision.getRevision();
     }
+
+
+	public void save(EncryptionService encryptionService) throws IOException, CryptoException {
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		revision.increment();
+		revision.flatPack(os);
+		dbOptions.flatPack(os);
+		Iterator it = getAccountsHash().values().iterator();
+		while (it.hasNext()) {
+			AccountInformation ai = (AccountInformation) it.next();
+			ai.flatPack(os);
+		}
+		os.close();
+		byte[] dataToEncrypt = os.toByteArray();
+		byte[] encryptedData = encryptionService.encrypt(dataToEncrypt);
+		FileOutputStream fos = new FileOutputStream(getDatabaseFile());
+		fos.write(PasswordDatabasePersistence.FILE_HEADER.getBytes());
+		fos.write(PasswordDatabasePersistence.DB_VERSION);
+		fos.write(encryptionService.getSalt());
+		fos.write(encryptedData);
+		fos.close();
+	}
 
 }
